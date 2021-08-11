@@ -1,0 +1,44 @@
+This server is fork of server:
+https://gist.github.com/miguelgrinberg/5614326
+
+Translated post about it on russian habr.com:
+https://habr.com/ru/post/246699/
+
+See the original article here:
+http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
+
+Original server was realized by python 2
+For work on python 3 you need to do in original code:
+
+1. in line 60 instead of
+	return jsonify( { 'tasks': map(make_public_task, tasks) } )
+	need to insert
+	return jsonify( { 'tasks': list(map(make_public_task, tasks)) } )
+
+2. in line 66 instead of
+	task = filter(lambda t: t['id'] == task_id, tasks)
+	need to insert
+	task = list(filter(lambda t: t['id'] == task_id, tasks))
+
+3. in line 90 instead of
+	task = filter(lambda t: t['id'] == task_id, tasks)
+	need to insert
+	task = list(filter(lambda t: t['id'] == task_id, tasks))
+
+4. in line 95 instead of
+	if 'title' in request.json and type(request.json['title']) != unicode:
+	need to insert
+	if 'title' in request.json and type(request.json['title']) != str:
+
+5. in line 97 instead of
+	if 'description' in request.json and type(request.json['description']) is not unicode:
+	need to insert
+	if 'description' in request.json and type(request.json['description']) is not str:
+
+6. in line 110 instead of
+	task = filter(lambda t: t['id'] == task_id, tasks)
+	need to insert
+	task = list(filter(lambda t: t['id'] == task_id, tasks))
+
+And then you need to install Flask-HTTPAuth:
+pip install Flask-HTTPAuth
